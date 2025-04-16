@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 import './App.css'
+import TodaysNews from './components/TodaysNews'
 
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -32,6 +33,8 @@ function App() {
           {isPlaying ? 'Now playing...' : 'Click Play to start the audio'}
         </p>
       </div>
+      
+      <TodaysNews />
     </div>
   )
 }

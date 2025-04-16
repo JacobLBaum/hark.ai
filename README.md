@@ -72,3 +72,22 @@ To use your own audio files:
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+## API Integration
+
+This project includes setup for OpenAI API integration. To configure the API key:
+
+1. Copy the `.env.example` file to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+
+2. Replace `your_openai_api_key_here` with your actual OpenAI API key in the `.env` file
+
+3. Restart the development server if it's already running
+
+**Important security notes:**
+- Never commit your `.env` file to version control
+- Never expose API keys in client-side code
+- The `.env` file is included in `.gitignore` to prevent accidental exposure
+- For production, set environment variables on your hosting platform
