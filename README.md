@@ -8,6 +8,8 @@ A simple web application built with React and Vite that features a button to pla
 - Responsive design
 - Visual feedback for playback state
 - Automatically resets when audio playback ends
+- AI-generated daily news podcast content
+- High-quality text-to-speech audio
 
 ## Getting Started
 
@@ -75,16 +77,26 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## API Integration
 
-This project includes setup for OpenAI API integration. To configure the API key:
+This project includes setup for multiple API integrations:
+
+### Perplexity API
+
+Used to generate the daily news podcast script with the Sonar Medium model:
 
 1. Copy the `.env.example` file to `.env`:
    ```bash
    cp .env.example .env
    ```
 
-2. Replace `your_openai_api_key_here` with your actual OpenAI API key in the `.env` file
+2. Replace `your_perplexity_api_key_here` with your actual Perplexity API key in the `.env` file
 
-3. Restart the development server if it's already running
+### ElevenLabs Text-to-Speech API
+
+Used to convert the news script to high-quality speech audio:
+
+1. In the same `.env` file, add your ElevenLabs API key as `VITE_ELEVENLABS_API_KEY`
+
+2. The "Read Aloud" button will use ElevenLabs to generate realistic speech audio
 
 **Important security notes:**
 - Never commit your `.env` file to version control

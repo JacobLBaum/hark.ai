@@ -17,7 +17,7 @@ export async function fetchDailyNewsPodcast(): Promise<string> {
         'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: 'gpt-4.1',
+        model: 'gpt-3.5-turbo',
         messages: [
           {
             role: 'user',
