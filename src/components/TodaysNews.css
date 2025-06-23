@@ -70,9 +70,10 @@ body, .harkai-main {
 }
 
 .audio-unavailable {
-  color: #ff7675;
-  font-weight: 600;
-  font-size: 1.1rem;
+  color: #c7ecee;
+  font-weight: 500;
+  font-style: italic;
+  font-size: 1.05rem;
 }
 
 .script-section {
