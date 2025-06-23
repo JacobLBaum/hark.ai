@@ -6,6 +6,30 @@
 // The API key is accessed through Vite's environment variables
 // Never expose this key directly in your code
 const perplexityApiKey = import.meta.env.VITE_PERPLEXITY_API_KEY || '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';
+const today = new Date().toISOString().split('T')[0];
+const queryData = {
+    model: "sonar", // Using Perplexity's Sonar model
+  messages: [
+    {
+      role: "system",
+      content: "You are a podcast script writer. Create an engaging 5-minute podcast script about interesting politics, technology, science and global news and developments from the past 24 hours. The script should be conversational and natural to read. Do not include any special characters or markdown formatting. Do not include any emojis."
+    },
+    {
+      role: "user",
+      content: `Please write a 5-minute podcast script about the most interesting headlines and stories in politics, technology, science and global news from the past 24 hours (as of ${today}). Focus on recent developments and breaking news.`
+    }
+  ],
+  temperature: 0.7, // Higher temperature for more creative output
+  max_tokens: 2500, // Enough tokens for a 5-minute script
+  top_p: 0.9,
+  return_related_questions: false,
+  return_images: false,
+  web_search_options: {
+    search_context_size: "high" // Get more comprehensive search results
+  },
+  stream: false // Get complete response at once
+};
+
 
 /**
  * Fetches a daily news podcast script from Perplexity's Sonar Medium model
@@ -13,24 +37,22 @@ const perplexityApiKey = import.meta.env.VITE_PERPLEXITY_API_KEY || 'pplx-LUC4mW
  */
 export async function fetchDailyNewsPodcast(): Promise<string> {
   try {
-    const response = await fetch('https://api.perplexity.ai/chat/completions', {
-      method: 'POST',
+    const response = await fetch("https://api.perplexity.ai/chat/completions", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${perplexityApiKey}`
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${perplexityApiKey}`
       },
-      body: JSON.stringify({
-        model: 'sonar',
-        messages: [
-          {
-            role: 'user',
-            content: "Give me a brief of the daily news and top stories of the day. The text should be in the style and flow of a daily news podcast. It should be readable in 1 minute."
-          }
-        ],
-        temperature: 0.7,
-        max_tokens: 1000,
-      })
+      body: JSON.stringify(queryData)
     });
+    // const response = await fetch("https://api.perplexity.ai/chat/completions", {
+      // method: "POST",
+      // headers: {
+        // "Content-Type": "application/json",
+        // "Authorization": `Bearer ${perplexityApiKey}`
+      // },
+      // body: JSON.stringify(queryData)
+    // });
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
