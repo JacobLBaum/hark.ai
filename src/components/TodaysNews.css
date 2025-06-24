@@ -1,20 +1,83 @@
 body, .harkai-main {
-  background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
   min-height: 100vh;
   margin: 0;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   color: #f5f6fa;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Audio wave background effects */
+.audio-wave {
+  position: absolute;
+  width: 8px;
+  height: 40px;
+  background: rgba(0, 198, 255, 0.3);
+  border-radius: 4px;
+  animation: waveFloatRight 4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+  left: -8px; /* Start off-screen to the left */
+}
+
+.audio-bit {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  animation: bitFloatRight 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+  left: -12px; /* Start off-screen to the left */
+}
+
+@keyframes waveFloatRight {
+  0% {
+    transform: translateX(0) scale(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(calc(100vw + 50px)) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes bitFloatRight {
+  0% {
+    transform: translateX(0) translateY(0) scale(0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(calc(100vw + 50px)) translateY(-30px) scale(1);
+    opacity: 0;
+  }
 }
 
 .harkai-banner {
   width: 100%;
-  background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
   padding: 2rem 0 1.2rem 0;
   text-align: center;
   box-shadow: 0 4px 24px rgba(0,0,0,0.12);
   border-bottom-left-radius: 32px;
   border-bottom-right-radius: 32px;
   margin-bottom: 2.5rem;
+  position: relative;
+  z-index: 2;
 }
 
 .harkai-banner h1 {
@@ -27,45 +90,50 @@ body, .harkai-main {
 }
 
 .podcast-highlight {
-  max-width: 540px;
+  max-width: 400px;
   margin: 2rem auto;
   background: rgba(255,255,255,0.07);
-  border-radius: 32px;
+  border-radius: 50%;
+  aspect-ratio: 1;
   box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-  padding: 2.5rem 2rem 2rem 2rem;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   transition: box-shadow 0.2s;
+  position: relative;
+  z-index: 2;
 }
 
 .podcast-highlight:hover {
-  box-shadow: 0 12px 48px rgba(0,198,255,0.18);
+  box-shadow: 0 12px 48px rgba(102, 126, 234, 0.18);
 }
 
 .podcast-title {
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 700;
-  margin-bottom: 1.5rem;
-  color: #00c6ff;
+  margin-bottom: 1.2rem;
+  color: #667eea;
   letter-spacing: 0.04em;
+  text-align: center;
 }
 
 .audio-player-wrapper {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .harkai-audio-player {
   width: 100%;
-  max-width: 420px;
+  max-width: 280px;
   background: #fff;
   border-radius: 16px;
-  box-shadow: 0 2px 16px rgba(0,198,255,0.12);
+  box-shadow: 0 2px 16px rgba(102, 126, 234, 0.12);
   outline: none;
-  accent-color: #00c6ff;
+  accent-color: #667eea;
   margin: 0 auto;
 }
 
@@ -79,21 +147,21 @@ body, .harkai-main {
 .script-section {
   width: 100%;
   margin-top: 1.5rem;
-  background: rgba(0,198,255,0.07);
+  background: rgba(102, 126, 234, 0.07);
   border-radius: 18px;
   padding: 1.2rem 1rem;
-  box-shadow: 0 2px 12px rgba(0,198,255,0.08);
+  box-shadow: 0 2px 12px rgba(102, 126, 234, 0.08);
   transition: background 0.2s;
 }
 
 .script-section:hover {
-  background: rgba(0,198,255,0.13);
+  background: rgba(102, 126, 234, 0.13);
 }
 
 .script-title {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #00c6ff;
+  color: #667eea;
   margin-bottom: 0.7rem;
 }
 
@@ -117,17 +185,17 @@ body, .harkai-main {
 
 @media (max-width: 700px) {
   .podcast-highlight {
-    max-width: 98vw;
-    padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+    max-width: 250px;
+    padding: 1.2rem 1rem 1.2rem 1rem;
   }
   .harkai-banner h1 {
     font-size: 2rem;
   }
   .podcast-title {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
   .harkai-audio-player {
-    max-width: 98vw;
+    max-width: 240px;
   }
 }
 
