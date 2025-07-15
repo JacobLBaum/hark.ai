@@ -65,7 +65,7 @@ export async function textToSpeech(text: string, voiceId: string = DEFAULT_VOICE
  * Gets available voices from ElevenLabs
  * @returns A promise resolving to a list of available voices
  */
-export async function getVoices(): Promise<any> {
+export async function getVoices(): Promise<{ voices: Array<{ voice_id: string; name: string; [key: string]: unknown }> }> {
   try {
     const response = await fetch('https://api.elevenlabs.io/v1/voices', {
       method: 'GET',

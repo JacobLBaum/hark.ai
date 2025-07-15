@@ -58,7 +58,7 @@ const TodaysNews: React.FC = () => {
   }, [effectId]);
 
   useEffect(() => {
-    const animateParticles = (_timestamp: number) => {
+    const animateParticles = () => {
       setAudioEffects(prev => {
         const now = Date.now();
         return prev.filter(effect => {

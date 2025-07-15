@@ -58,7 +58,7 @@ const HomePage: React.FC = () => {
   }, [effectId]);
 
   useEffect(() => {
-    const animateParticles = (_timestamp: number) => {
+    const animateParticles = () => {
       setAudioEffects(prev => {
         const now = Date.now();
         return prev.filter(effect => {
@@ -109,14 +109,6 @@ const HomePage: React.FC = () => {
       top: `${effect.y}px`,
       animationDelay: `${effect.delay}s`
     };
-  };
-
-  const handleDailyPodcast = () => {
-    navigate("/podcasts/?topic=daily&dur=5");
-  };
-
-  const handleAnkylosingSpondylitis = () => {
-    navigate("/podcasts/?topic=ankylosing%spondylitis&dur=5");
   };
 
   return (

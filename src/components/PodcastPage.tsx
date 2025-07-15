@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import "./PodcastPage.css";
 
@@ -46,7 +46,7 @@ const PodcastPage: React.FC = () => {
   };
 
   // Function to find the most recent podcast
-  const findMostRecentPodcast = async (topic: string, dur: string) => {
+  const findMostRecentPodcast = useCallback(async (topic: string, dur: string) => {
     console.log(`Starting search for podcast: topic=${topic}, duration=${dur}`);
     setIsLoading(true);
     setError(null);
@@ -78,7 +78,34 @@ const PodcastPage: React.FC = () => {
     setError("Sorry, no podcast available yet...");
     setAudioUrl(null);
     setIsLoading(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    const animateParticles = () => {
+      setAudioEffects(prev => {
+        const now = Date.now();
+        return prev.filter(effect => {
+          const duration = effect.type === 'wave' ? 2500 : 1500;
+          const elapsed = now - effect.startTime;
+          const progress = Math.min(elapsed / duration, 2.5);
+          // Calculate size based on distance traveled (bell curve)
+          const distanceFromCenter = Math.abs(progress - 0.5) * 2;
+          const size = Math.max(0.1, 1 - distanceFromCenter * distanceFromCenter);
+          // Only remove if at the far right and very small
+          return !(progress >= 2.5 && size < 0.2);
+        });
+      });
+      animationRef.current = requestAnimationFrame(animateParticles);
+    };
+
+    animationRef.current = requestAnimationFrame(animateParticles);
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const topic = searchParams.get('topic') || 'daily';
@@ -93,7 +120,7 @@ const PodcastPage: React.FC = () => {
 
     // Find the most recent podcast
     findMostRecentPodcast(topic, dur);
-  }, [searchParams]);
+  }, [searchParams, findMostRecentPodcast]);
 
   useEffect(() => {
     const createRandomEffect = () => {
@@ -124,33 +151,6 @@ const PodcastPage: React.FC = () => {
       clearTimeout(initialTimeout);
     };
   }, [effectId]);
-
-  useEffect(() => {
-    const animateParticles = (_timestamp: number) => {
-      setAudioEffects(prev => {
-        const now = Date.now();
-        return prev.filter(effect => {
-          const duration = effect.type === 'wave' ? 2500 : 1500;
-          const elapsed = now - effect.startTime;
-          const progress = Math.min(elapsed / duration, 2.5);
-          // Calculate size based on distance traveled (bell curve)
-          const distanceFromCenter = Math.abs(progress - 0.5) * 2;
-          const size = Math.max(0.1, 1 - distanceFromCenter * distanceFromCenter);
-          // Only remove if at the far right and very small
-          return !(progress >= 2.5 && size < 0.2);
-        });
-      });
-      animationRef.current = requestAnimationFrame(animateParticles);
-    };
-
-    animationRef.current = requestAnimationFrame(animateParticles);
-
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
-  }, []);
 
   const getParticleStyle = (effect: AudioEffect) => {
     const now = Date.now();
