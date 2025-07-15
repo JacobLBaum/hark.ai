@@ -111,14 +111,6 @@ const HomePage: React.FC = () => {
     };
   };
 
-  const handleDailyPodcast = () => {
-    navigate("/podcasts/?topic=daily&dur=5");
-  };
-
-  const handleAnkylosingSpondylitis = () => {
-    navigate("/podcasts/?topic=ankylosing%spondylitis&dur=5");
-  };
-
   return (
     <div className="harkai-main">
       {/* Audio wave background effects */}
