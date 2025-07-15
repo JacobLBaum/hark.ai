@@ -73,7 +73,12 @@ export async function fetchDailyNewsPodcast(): Promise<string> {
  * @returns A promise resolving to an array of topics
  */
 export async function fetchAvailablePodcastTopics(): Promise<{ topic: string, duration: string }[]> {
-  const response = await fetch('/api/podcast-topics');
+  // Automatically use local Worker URL if running locally, otherwise use production Worker URL
+  const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+  const workerUrl = isLocal
+    ? 'http://127.0.0.1:8787'
+    : 'https://daily-podcast-generator.jacoblbaum.workers.dev';
+  const response = await fetch(`${workerUrl}/api/podcast-topics`);
   if (!response.ok) {
     throw new Error('Failed to fetch podcast topics');
   }
