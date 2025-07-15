@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./HomePage.css";
+import { fetchAvailablePodcastTopics } from "../services/perplexity";
 
 interface AudioEffect {
   id: number;
@@ -15,6 +16,16 @@ const HomePage: React.FC = () => {
   const [audioEffects, setAudioEffects] = useState<AudioEffect[]>([]);
   const [effectId, setEffectId] = useState(0);
   const animationRef = useRef<number | undefined>(undefined);
+  const [podcastTopics, setPodcastTopics] = useState<{ topic: string, duration: string }[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchAvailablePodcastTopics()
+      .then(setPodcastTopics)
+      .catch(() => setError("Failed to load podcast topics."))
+      .finally(() => setLoading(false));
+  }, []);
 
   useEffect(() => {
     const createRandomEffect = () => {
@@ -47,7 +58,7 @@ const HomePage: React.FC = () => {
   }, [effectId]);
 
   useEffect(() => {
-    const animateParticles = (_timestamp: number) => {
+    const animateParticles = () => {
       setAudioEffects(prev => {
         const now = Date.now();
         return prev.filter(effect => {
@@ -100,14 +111,6 @@ const HomePage: React.FC = () => {
     };
   };
 
-  const handleDailyPodcast = () => {
-    navigate("/podcasts/?topic=daily&dur=5");
-  };
-
-  const handleAnkylosingSpondylitis = () => {
-    navigate("/podcasts/?topic=ankylosing%spondylitis&dur=5");
-  };
-
   return (
     <div className="harkai-main">
       {/* Audio wave background effects */}
@@ -135,29 +138,28 @@ const HomePage: React.FC = () => {
           />
         )
       ))}
-      
       <header className="harkai-banner">
         <h1>Hark-AI</h1>
       </header>
-      
       <section className="homepage-content">
         <h2 className="homepage-title">Welcome to Hark-AI</h2>
         <p className="homepage-subtitle">Choose your podcast experience</p>
-        
         <div className="button-container">
-          <button 
-            className="podcast-button daily-podcast"
-            onClick={handleDailyPodcast}
-          >
-            Daily Podcast
-          </button>
-          
-          <button 
-            className="podcast-button ankylosing-spondylitis"
-            onClick={handleAnkylosingSpondylitis}
-          >
-            Ankylosing Spondylitis
-          </button>
+          {loading && <p>Loading topics...</p>}
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {!loading && !error && podcastTopics.map(({ topic, duration }) => {
+            // Convert underscores to %s for URL
+            const linkTopic = topic.replace(/_/g, '%s');
+            return (
+              <button
+                key={topic}
+                className="podcast-button"
+                onClick={() => navigate(`/podcasts/?topic=${encodeURIComponent(linkTopic)}&dur=${encodeURIComponent(duration)}`)}
+              >
+                {topic.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
+              </button>
+            );
+          })}
         </div>
       </section>
     </div>

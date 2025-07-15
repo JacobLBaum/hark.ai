@@ -69,6 +69,18 @@ export async function fetchDailyNewsPodcast(): Promise<string> {
 }
 
 /**
+ * Fetches available podcast topics from the backend
+ * @returns A promise resolving to an array of topics
+ */
+export async function fetchAvailablePodcastTopics(): Promise<{ topic: string, duration: string }[]> {
+  const response = await fetch('/api/podcast-topics');
+  if (!response.ok) {
+    throw new Error('Failed to fetch podcast topics');
+  }
+  return response.json();
+}
+
+/**
  * Check if the Perplexity API key is configured
  */
 export function isPerplexityConfigured(): boolean {
