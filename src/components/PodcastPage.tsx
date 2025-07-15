@@ -40,28 +40,32 @@ const PodcastPage: React.FC = () => {
       const response = await fetch(url, { method: 'HEAD' });
       return response.ok;
     } catch (error) {
+      console.error(`Error checking audio existence: ${error}`);
       return false;
     }
   };
 
   // Function to find the most recent podcast
   const findMostRecentPodcast = async (topic: string, dur: string) => {
+    console.log(`Starting search for podcast: topic=${topic}, duration=${dur}`);
     setIsLoading(true);
     setError(null);
     
-    // Convert topic to the format expected by the R2 path
-    let r2Topic = topic;
-    if (topic === 'ankylosing%spondylitis') {
-      r2Topic = 'ankylosing_spondylitis';
-    }
+    // Convert topic from URL format (%s) to R2 path format (underscores)
+    const r2Topic = topic.replace(/%s/g, '_');
+    console.log(`Converted topic for R2 path: ${r2Topic}`);
 
     // Check dates from today going back up to 30 days
     for (let daysAgo = 0; daysAgo <= 30; daysAgo++) {
       const datePath = daysAgo === 0 ? getTodayPath() : getDatePath(daysAgo);
       const testUrl = `${R2_BASE_URL}/podcasts/${datePath}/${r2Topic}/${dur}/default/audio.mp3`;
       
+      console.log(`Checking URL: ${testUrl}`);
       const exists = await checkAudioExists(testUrl);
+      console.log(`URL ${exists ? 'EXISTS' : 'NOT FOUND'}: ${testUrl}`);
+      
       if (exists) {
+        console.log(`✅ Podcast found! Setting audio URL: ${testUrl}`);
         setAudioUrl(testUrl);
         setFoundDate(datePath);
         setIsLoading(false);
@@ -70,6 +74,7 @@ const PodcastPage: React.FC = () => {
     }
 
     // If no podcast found after 30 days, show error
+    console.log(`❌ No podcast found after checking 30 days for topic: ${topic}`);
     setError("Sorry, no podcast available yet...");
     setAudioUrl(null);
     setIsLoading(false);
@@ -80,13 +85,11 @@ const PodcastPage: React.FC = () => {
     const dur = searchParams.get('dur') || '5';
     
     // Set the podcast title based on the topic
-    if (topic === 'daily') {
-      setPodcastTitle("Today's Podcast");
-    } else if (topic === 'ankylosing%spondylitis') {
-      setPodcastTitle("Ankylosing Spondylitis");
-    } else {
-      setPodcastTitle(topic.replace(/%20/g, ' ').replace(/%/g, ''));
-    }
+    const formattedTitle = topic
+      .replace(/%s/g, ' ')
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, c => c.toUpperCase());
+    setPodcastTitle(formattedTitle);
 
     // Find the most recent podcast
     findMostRecentPodcast(topic, dur);
@@ -220,7 +223,7 @@ const PodcastPage: React.FC = () => {
           className="back-button"
           onClick={() => navigate('/')}
         >
-          ← Back to Home
+          ← Home
         </button>
       </header>
       <section className="podcast-highlight">
