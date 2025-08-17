@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./HomePage.css";
-import { fetchAvailablePodcastTopics } from "../services/perplexity";
+import { fetchAvailablePodcastTopics } from "../services/backend";
 
 interface AudioEffect {
   id: number;
