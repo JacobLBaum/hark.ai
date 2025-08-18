@@ -1,0 +1,6 @@
+name = "hark-ai-frontend"
+compatibility_date = "2025-08-17"
+
+# Serve static assets from the Vite build output
+[assets]
+directory = "./dist"
