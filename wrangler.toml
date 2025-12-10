@@ -1,4 +1,4 @@
-name = "hark-ai-frontend"
+name = "hark-ai-prod"
 compatibility_date = "2025-08-17"
 
 # Serve static assets from the Vite build output
