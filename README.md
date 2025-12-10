@@ -1,15 +1,6 @@
 # Hark AI Front End
 
-A simple web application built with React and Vite that features a button to play and pause an audio file.
-
-## Features
-
-- Play/pause functionality for audio files
-- Responsive design
-- Visual feedback for playback state
-- Automatically resets when audio playback ends
-- AI-generated daily news podcast content
-- High-quality text-to-speech audio
+A simple web application built with React and Vite that features AI generated podcasts that are updated on a regular schedule.
 
 ## Getting Started
 
@@ -41,28 +32,6 @@ A simple web application built with React and Vite that features a button to pla
    ```
 
 4. Open your browser and navigate to `http://localhost:5173`
-
-## Project Structure
-
-```
-/
-├── public/           # Static assets
-│   └── audio/        # Audio files
-│       └── sample.mp3  # Sample audio file
-├── src/              # Source files
-│   ├── App.css       # App styling
-│   ├── App.tsx       # Main application component
-│   ├── index.css     # Global styles
-│   └── main.tsx      # Entry point
-└── package.json      # Dependencies and scripts
-```
-
-## Adding Custom Audio
-
-To use your own audio files:
-
-1. Place your audio files in the `public/audio/` directory
-2. Update the `src` attribute in the `<audio>` tag in `App.tsx`
 
 ## Technologies Used
 
