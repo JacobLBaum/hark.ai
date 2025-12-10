@@ -108,6 +108,20 @@ const PodcastPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    const audioUrl = searchParams.get('audioUrl');
+    const title = searchParams.get('title');
+    
+    // If audioUrl is provided (from TopicPage), use it directly
+    if (audioUrl) {
+      setIsLoading(true);
+      setError(null);
+      setAudioUrl(audioUrl);
+      setPodcastTitle(title || "Podcast");
+      setIsLoading(false);
+      return;
+    }
+    
+    // Otherwise, use the existing R2 search logic
     const topic = searchParams.get('topic') || 'daily';
     const dur = searchParams.get('dur') || '5';
     

@@ -1,4 +1,4 @@
-# Hark AI
+# Hark AI Front End
 
 A simple web application built with React and Vite that features AI generated podcasts that are updated on a regular schedule.
 

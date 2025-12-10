@@ -16,7 +16,7 @@ const HomePage: React.FC = () => {
   const [audioEffects, setAudioEffects] = useState<AudioEffect[]>([]);
   const [effectId, setEffectId] = useState(0);
   const animationRef = useRef<number | undefined>(undefined);
-  const [podcastTopics, setPodcastTopics] = useState<{ topic: string, duration: string }[]>([]);
+  const [podcastTopics, setPodcastTopics] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -147,14 +147,12 @@ const HomePage: React.FC = () => {
         <div className="button-container">
           {loading && <p>Loading topics...</p>}
           {error && <p style={{ color: 'red' }}>{error}</p>}
-          {!loading && !error && podcastTopics.map(({ topic, duration }) => {
-            // Convert underscores to %s for URL
-            const linkTopic = topic.replace(/_/g, '%s');
+          {!loading && !error && podcastTopics.map((topic) => {
             return (
               <button
                 key={topic}
                 className="podcast-button"
-                onClick={() => navigate(`/podcasts/?topic=${encodeURIComponent(linkTopic)}&dur=${encodeURIComponent(duration)}`)}
+                onClick={() => navigate(`/topics/${encodeURIComponent(topic)}`)}
               >
                 {topic.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
               </button>
