@@ -1,4 +1,4 @@
-# Audio Player Demo
+# Hark AI Front End
 
 A simple web application built with React and Vite that features a button to play and pause an audio file.
 

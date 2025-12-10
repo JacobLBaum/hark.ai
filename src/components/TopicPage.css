@@ -1,0 +1,133 @@
+.topic-content {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  position: relative;
+  z-index: 2;
+}
+
+.topic-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #667eea;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.podcast-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.podcast-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.podcast-item:hover {
+  background: rgba(102, 126, 234, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
+  border-color: rgba(102, 126, 234, 0.4);
+}
+
+.podcast-item-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: #667eea;
+}
+
+.podcast-item-date {
+  font-size: 0.9rem;
+  color: #c7ecee;
+  margin: 0 0 0.75rem 0;
+  opacity: 0.8;
+  font-style: italic;
+}
+
+.podcast-item-summary {
+  font-size: 1rem;
+  color: #f5f6fa;
+  margin: 0;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.no-podcasts {
+  text-align: center;
+  padding: 3rem;
+  color: #c7ecee;
+  font-style: italic;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+}
+
+.loading-spinner {
+  border: 4px solid rgba(102, 126, 234, 0.1);
+  border-left: 4px solid #667eea;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-message {
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.error-message h4 {
+  color: #ff6b6b;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.error-message p {
+  color: #f5f6fa;
+  margin: 0;
+  opacity: 0.9;
+}
+
+@media (max-width: 700px) {
+  .topic-content {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .topic-title {
+    font-size: 1.5rem;
+  }
+  
+  .podcast-item {
+    padding: 1rem;
+  }
+  
+  .podcast-item-title {
+    font-size: 1.1rem;
+  }
+}
+
